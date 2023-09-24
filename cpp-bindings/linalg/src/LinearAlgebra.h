@@ -14,4 +14,7 @@ public:
   static std::vector<std::vector<double>>
   matmulBlas(const std::vector<std::vector<double>> &a,
              const std::vector<std::vector<double>> &b);
+  static std::vector<double>
+  cossimBlas(const std::vector<std::vector<double>> &a,
+             const std::vector<std::vector<double>> &b);
 };

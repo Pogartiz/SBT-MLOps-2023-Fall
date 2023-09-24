@@ -88,3 +88,56 @@ LinearAlgebra::matmulBlas(const std::vector<std::vector<double>> &a,
 
   return result;
 }
+
+std::vector<double>
+LinearAlgebra::cossimBlas(const std::vector<std::vector<double>> &a,
+                          const std::vector<std::vector<double>> &b) {
+ size_t aRows = a.size();
+ size_t aCols = a[0].size();
+ size_t bRows = b.size();
+ size_t bCols = b[0].size();
+
+
+
+ if (aCols != bCols) {
+    throw std::runtime_error("The number of columns of the 1st matrix must "
+                             "equal the number of columns of the 2nd matrix");
+  }
+
+ if (aRows != bRows) {
+    throw std::runtime_error("The number of rows of the 1st matrix must "
+                             "equal the number of rows of the 2nd matrix");
+  }
+
+ size_t N = aRows;
+ size_t D = aCols;
+
+  // Convert 2D vectors to 1D vector for BLAS compatibility
+ std::vector<double> a_flat(aRows * aCols);
+ std::vector<double> b_flat(bRows * bCols);
+ 
+
+ for (size_t i = 0; i < N; i++)
+    for (size_t j = 0; j < D; j++) {
+      a_flat[i * aCols + j] = a[i][j];
+      b_flat[i * bCols + j] = b[i][j];
+    }
+ 
+  // Calculate norms of vectors 
+ std::vector<double> cosineSimilarities(N);
+ for (size_t i = 0; i < N; ++i) {
+    float dotProduct = cblas_ddot(D, &a_flat[i * D], 1, &b_flat[i * D], 1);
+    double norm1 = cblas_dnrm2(D, &a_flat[i * D], 1);
+    double norm2 = cblas_dnrm2(D, &b_flat[i * D], 1);
+    double cosineSimilarity = dotProduct / (norm1 * norm2);
+    if (norm1 == 0.0 || norm2 == 0.0)
+    {
+        cosineSimilarities[i] = 1.0;
+    }
+    else
+        cosineSimilarities[i] = cosineSimilarity;
+    }
+ 
+ return cosineSimilarities;
+
+}

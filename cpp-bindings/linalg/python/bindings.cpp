@@ -61,5 +61,18 @@ PYBIND11_MODULE(linalg_core, m) {
           Returns:
             list of list of float
                 The result of matrix multiplication.
+      )doc")
+      .def_static("cossimBlas", &LinearAlgebra::cossimBlas, R"doc(
+          Cosine similarity calculation using BLAS.
+
+          Parameters:
+            a : list of list of float
+                The first set of vectors.
+            b : list of list of float
+                The second set of vectors.
+
+          Returns:
+            list of float
+                The result of cosine similarity calculation.
       )doc");
 }

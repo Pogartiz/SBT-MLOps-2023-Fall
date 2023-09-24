@@ -1,7 +1,7 @@
 from typing import List, Callable
 import numpy as np
 import time
-import linalg
+import linalg 
 
 
 def py_matrix_multiply(mat1: List[List[int]], mat2: List[List[int]]) -> List[List[int]]:

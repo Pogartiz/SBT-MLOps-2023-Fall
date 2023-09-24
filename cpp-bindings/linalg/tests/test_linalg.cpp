@@ -17,6 +17,15 @@ TEST(LinearAlgebraTests, MatrixMultiplicationBlas) {
   EXPECT_DOUBLE_EQ(result[1][1], 12.0);
 }
 
+TEST(LinearAlgebraTests, cosineSimilarityBlas) {
+  std::vector<std::vector<double>> matrix_a = {{3.0, 4.0}, {3.0, 4.0}, {0.0, 0.0}, {0.0, 0.0}};
+  std::vector<std::vector<double>> matrix_b = {{2.0, 0.0}, {7.0, 24.0}, {0.0, 0.0}, {1.0, 2.0}};
+  auto result = LinearAlgebra::cossimBlas(matrix_a, matrix_b);
+  EXPECT_DOUBLE_EQ(result[0], 0.6);
+  EXPECT_DOUBLE_EQ(result[1], 0.936);
+  EXPECT_DOUBLE_EQ(result[2], 1.0);
+  EXPECT_DOUBLE_EQ(result[3], 1.0);
+}
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
